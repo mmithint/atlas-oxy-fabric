@@ -1,0 +1,43 @@
+id: oxy-fabric
+name: OXY-Fabric
+version: 1.0.0
+services:
+  auth:
+    enabled: true
+    fabric:
+      enabled: true
+      externalEntraExchange: true
+    password:
+      enabled: false
+    allowedRedirectUris:
+      - http://localhost:5173
+      - http://127.0.0.1:5173
+      - https://epic-olive-219ee7789a-centralindia.webapp.fabricapps.net
+  data:
+    enabled: true
+    path: packages/data
+    buildCommand: npm run build
+    dialect: mssql
+  staticHosting:
+    enabled: true
+    path: packages/frontend
+    folder: dist
+    buildCommand: npm run build:fabric
+    indexDocument: index.html
+    assetAccess: protected
+    embedded:
+      only: false
+  storage:
+    enabled: false
+  functions:
+    enabled: false
+connectors:
+  - name: atlaslakehouse
+    type: fabric-sqlanalytics
+    config:
+      workspaceId: 208e0a9a-445b-4016-a380-4196adb2fc3f
+      itemId: c50e8282-e7a7-4b71-a2b1-938698d9f2ee
+    auth:
+      type: application
+    operations:
+      - name: read

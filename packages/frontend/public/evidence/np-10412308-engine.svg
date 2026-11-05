@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 640" width="960" height="640">
+<defs>
+ <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5b6168"/><stop offset="1" stop-color="#2b3036"/></linearGradient>
+ <linearGradient id="metal" x1="0" y1="0" x2="1" y2="0.3"><stop offset="0" stop-color="#d9dcdf"/><stop offset="0.45" stop-color="#f4f5f6"/><stop offset="0.55" stop-color="#c9cdd1"/><stop offset="1" stop-color="#e6e8ea"/></linearGradient>
+ <filter id="sh"><feDropShadow dx="6" dy="10" stdDeviation="10" flood-opacity="0.45"/></filter>
+ <pattern id="brush" width="6" height="6" patternUnits="userSpaceOnUse"><rect width="6" height="1" fill="#000" opacity="0.04"/></pattern>
+</defs>
+<rect width="960" height="640" fill="url(#bg)"/>
+<g opacity="0.25"><circle cx="120" cy="560" r="160" fill="#8a6a3a"/><circle cx="880" cy="80" r="120" fill="#3a4a5a"/></g>
+<g transform="rotate(-3 480.0 320.0)" filter="url(#sh)">
+ <rect x="200" y="110" width="560" height="374" rx="10" fill="url(#metal)" stroke="#8d939a" stroke-width="3"/>
+ <rect x="200" y="110" width="560" height="374" rx="10" fill="url(#brush)"/>
+ <rect x="200" y="110" width="560" height="62" rx="10" fill="#a86400" opacity="0.9"/>
+ <text x="480" y="152" text-anchor="middle" font-family="Arial,sans-serif" font-size="28" font-weight="700" fill="#fff" letter-spacing="3">GAS ENGINE</text>
+ <text x="250" y="230" font-family="Consolas,monospace" font-size="22" fill="#2a2f35" letter-spacing="1">MFR</text><text x="520" y="230" font-family="Consolas,monospace" font-size="26" font-weight="700" fill="#15191d" letter-spacing="2">CATERPILLAR</text><text x="250" y="274" font-family="Consolas,monospace" font-size="22" fill="#2a2f35" letter-spacing="1">MODEL</text><text x="520" y="274" font-family="Consolas,monospace" font-size="26" font-weight="700" fill="#15191d" letter-spacing="2">G3508</text><text x="250" y="318" font-family="Consolas,monospace" font-size="22" fill="#2a2f35" letter-spacing="1">SERIAL NO.</text><text x="520" y="318" font-family="Consolas,monospace" font-size="26" font-weight="700" fill="#15191d" letter-spacing="2">CAT5217304</text><text x="250" y="362" font-family="Consolas,monospace" font-size="22" fill="#2a2f35" letter-spacing="1">RATED POWER</text><text x="520" y="362" font-family="Consolas,monospace" font-size="26" font-weight="700" fill="#15191d" letter-spacing="2">690 BHP</text><text x="250" y="406" font-family="Consolas,monospace" font-size="22" fill="#2a2f35" letter-spacing="1">RPM</text><text x="520" y="406" font-family="Consolas,monospace" font-size="26" font-weight="700" fill="#15191d" letter-spacing="2">1400</text><text x="250" y="450" font-family="Consolas,monospace" font-size="22" fill="#2a2f35" letter-spacing="1">YEAR</text><text x="520" y="450" font-family="Consolas,monospace" font-size="26" font-weight="700" fill="#15191d" letter-spacing="2">2017</text>
+ <circle cx="222" cy="194" r="7" fill="#9aa0a6"/><circle cx="738" cy="194" r="7" fill="#9aa0a6"/>
+ <circle cx="222" cy="464" r="7" fill="#9aa0a6"/><circle cx="738" cy="464" r="7" fill="#9aa0a6"/>
+</g>
+<rect x="0" y="600" width="960" height="40" fill="#000" opacity="0.55"/>
+<text x="16" y="626" font-family="Arial,sans-serif" font-size="16" fill="#fff">Field photo · Red Tank CS · engine nameplate</text>
+<text x="944" y="626" text-anchor="end" font-family="Arial,sans-serif" font-size="14" fill="#f2b14a">SAMPLE IMAGE · POV</text>
+</svg>

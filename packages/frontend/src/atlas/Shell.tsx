@@ -1,5 +1,7 @@
 import {
   Boxes,
+  ChevronsLeft,
+  ChevronsRight,
   ClipboardCheck,
   Database,
   FileSpreadsheet,
@@ -121,6 +123,22 @@ export function Shell({ route, children }: { route: Route; children: ReactNode }
   const loadedAt = goldEquipment[0]?.goldLoadedAt;
   const [resetting, setResetting] = useState(false);
   const [search, setSearch] = useState('');
+  const [expanded, setExpanded] = useState<boolean>(() => {
+    try {
+      return window.localStorage.getItem('atlas.nav.expanded') === '1';
+    } catch {
+      return false;
+    }
+  });
+  const toggleRail = () =>
+    setExpanded((p) => {
+      try {
+        window.localStorage.setItem('atlas.nav.expanded', p ? '0' : '1');
+      } catch {
+        /* storage unavailable — keep it for this session only */
+      }
+      return !p;
+    });
   const mainRef = useRef<HTMLElement>(null);
   const who = initials(actor);
 
@@ -192,36 +210,68 @@ export function Shell({ route, children }: { route: Route; children: ReactNode }
       </header>
 
       <div className="flex min-h-0 flex-1">
-        {/* Icon rail: always compact; labels show on hover. */}
-        <nav aria-label="Main" className="flex w-[60px] shrink-0 flex-col items-center gap-100 overflow-y-auto border-r border-border bg-card py-300">
+        {/* Icon rail like iCUE. The arrow at the bottom expands it to show labels; the choice is remembered. */}
+        <nav
+          aria-label="Main"
+          className={cn(
+            'flex shrink-0 flex-col gap-100 overflow-y-auto overflow-x-hidden border-r border-border bg-card py-300 transition-[width] duration-200',
+            expanded ? 'w-[216px] px-200' : 'w-[60px] items-center'
+          )}
+        >
           {NAV.map((n, i) => {
-            const header = i > 0 && NAV[i - 1].section !== n.section;
+            const header = i === 0 || NAV[i - 1].section !== n.section;
             const active = route.page === n.page;
             const Icon = n.icon;
             const count = n.page === 'approvals' ? pending : n.page === 'requests' ? returned : n.page === 'sap' ? sapWork : 0;
             return (
               <div key={n.page} className="contents">
-                {header ? <span aria-hidden className="my-200 h-px w-[28px] shrink-0 bg-border" /> : null}
+                {header ? (
+                  expanded ? (
+                    <p className="px-300 pb-100 pt-300 text-[length:var(--text-100)] font-semibold uppercase tracking-widest text-muted-foreground">{n.section}</p>
+                  ) : i > 0 ? (
+                    <span aria-hidden className="my-200 h-px w-[28px] shrink-0 bg-border" />
+                  ) : null
+                ) : null}
                 <a
                   href={href({ page: n.page } as Route)}
                   aria-current={active ? 'page' : undefined}
-                  title={n.label}
+                  title={expanded ? undefined : n.label}
                   className={cn(
-                    'relative grid h-[40px] w-[40px] shrink-0 place-items-center rounded-lg transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+                    'relative flex h-[40px] shrink-0 items-center rounded-lg transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+                    expanded ? 'w-full gap-300 px-300 text-[length:var(--text-300)] font-medium' : 'w-[40px] justify-center',
                     active ? 'bg-primary/12 text-primary shadow-[inset_3px_0_0_var(--color-primary)]' : 'text-muted-foreground hover:bg-accent hover:text-foreground'
                   )}
                 >
-                  <Icon aria-hidden className="icon-size-300" />
-                  <span className="sr-only">{n.label}</span>
+                  <Icon aria-hidden className="icon-size-300 shrink-0" />
+                  {expanded ? <span className="flex-1 truncate">{n.label}</span> : <span className="sr-only">{n.label}</span>}
                   {count > 0 ? (
-                    <span aria-label={`${count} waiting`} className="absolute right-[1px] top-[2px] grid h-[16px] min-w-[16px] place-items-center rounded-full bg-primary px-100 text-[length:var(--text-100)] font-semibold text-primary-foreground ring-2 ring-card">
-                      {count}
-                    </span>
+                    expanded ? (
+                      <span aria-label={`${count} waiting`} className="rounded-full bg-primary px-200 text-[length:var(--text-100)] font-semibold leading-200 text-primary-foreground">
+                        {count}
+                      </span>
+                    ) : (
+                      <span aria-label={`${count} waiting`} className="absolute right-[1px] top-[2px] grid h-[16px] min-w-[16px] place-items-center rounded-full bg-primary px-100 text-[length:var(--text-100)] font-semibold text-primary-foreground ring-2 ring-card">
+                        {count}
+                      </span>
+                    )
                   ) : null}
                 </a>
               </div>
             );
           })}
+          <button
+            type="button"
+            onClick={toggleRail}
+            aria-expanded={expanded}
+            title={expanded ? 'Collapse menu' : 'Expand menu'}
+            className={cn(
+              'mt-auto flex h-[36px] shrink-0 items-center rounded-lg border border-border text-muted-foreground transition hover:bg-accent hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+              expanded ? 'w-full gap-200 px-300 text-[length:var(--text-200)]' : 'w-[36px] justify-center'
+            )}
+          >
+            {expanded ? <ChevronsLeft aria-hidden className="icon-size-200" /> : <ChevronsRight aria-hidden className="icon-size-200" />}
+            {expanded ? <span>Collapse</span> : <span className="sr-only">Expand menu</span>}
+          </button>
         </nav>
 
         <main ref={mainRef} className="min-w-0 flex-1 overflow-y-auto px-400 py-400 lg:px-500">
